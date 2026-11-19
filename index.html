@@ -676,6 +676,30 @@
     }
 
 
+    /* Ajuste individual para las fotografías señaladas en escritorio.
+       Conserva la proporción original y no altera la vista móvil. */
+    @media (min-width: 801px) {
+      .product-visual.product-visual-desktop-focus {
+        height: 330px;
+        min-height: 330px;
+        flex-basis: 330px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px;
+      }
+      .product-visual.product-visual-desktop-focus img {
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+        padding: 0;
+        object-fit: contain;
+        object-position: center;
+        flex: 0 1 auto;
+      }
+    }
+
     /* Evitar recortes por ampliación al pasar el cursor en escritorio */
     @media (min-width: 801px) {
       .product-visual img,
@@ -1004,6 +1028,20 @@ function renderProducts() {
       "Marcador de Objeto"
     ]);
     if (tallerProductImages.has(name)) visual.classList.add("product-visual-focus");
+    const desktopFocusProducts = new Set([
+      "Batefuego Forestal",
+      "Trimmer Desjarretadora de 9M Modulos 1,5M y cabezal Truper",
+      "Tijeron de poda marca Gavilan Colorao",
+      "Cámara Trampa Bushnell prime Trail 24 MP LowGlow 119932CB",
+      "Tijeron de Poda Telescopico Marca Fiskars",
+      "Pinza Plegable Herpetologia Serpiente 130cm",
+      "Guante de mecánica marca Dewalt Dpg780",
+      "Luces Solares 28 Led Inalámbricas",
+      "Destornillador de Bateria Ixo Profesional",
+      "Medidor de Monóxido de Carbono As8700a",
+      "Medidor Ambiental 5 en 1 Extech EN300"
+    ]);
+    if (desktopFocusProducts.has(name)) visual.classList.add("product-visual-desktop-focus");
     const productImage = document.createElement("img");
     productImage.src = imagePath;
     productImage.alt = name;
