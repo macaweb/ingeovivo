@@ -1033,11 +1033,13 @@ function sendOrder() {
   if (!cart.length) return;
 
   const lines = cart.map(item =>
-    `• ${item.name} — Cantidad: ${item.quantity}`
+    `• ${item.name} — *Cantidad: ${item.quantity}*`
   );
 
   const message = [
-    "¡Hola, INGEOVIVO S.A.S.! Quisiera solicitar una cotización para los siguientes productos:",
+    "*¡Hola, INGEOVIVO S.A.S.!*",
+    "",
+    "Quisiera solicitar una cotización para los siguientes productos:",
     "",
     ...lines,
     "",
