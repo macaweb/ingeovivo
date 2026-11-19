@@ -1,0 +1,609 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#103D25">
+  <title>INGEOVIVO | Forestal & Comercial</title>
+  <style>
+    :root {
+      --verde: #103D25;
+      --verde-vivo: #49A923;
+      --verde-suave: #A6C99A;
+      --fondo: #F5F6F1;
+      --blanco: #fff;
+      --texto: #18251c;
+      --gris: #68736b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--texto);
+      background: var(--fondo);
+    }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+
+    header {
+      background: var(--blanco);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      box-shadow: 0 2px 15px #103d2510;
+    }
+    .nav {
+      max-width: 1200px;
+      margin: auto;
+      padding: 15px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--verde);
+      text-decoration: none;
+    }
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      background: var(--verde);
+      color: white;
+      border-radius: 50% 50% 50% 8px;
+      display: grid;
+      place-items: center;
+      font-size: 23px;
+      transform: rotate(-8deg);
+    }
+    .brand-name { font-size: 21px; font-weight: 800; letter-spacing: 1.5px; }
+    .brand-sub { font-size: 9px; letter-spacing: 2px; color: var(--gris); margin-top: 3px; }
+    .nav-links { display: flex; align-items: center; gap: 25px; }
+    .nav-links a {
+      color: var(--verde);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .cart-button {
+      background: var(--verde);
+      color: white;
+      border: 0;
+      border-radius: 30px;
+      padding: 11px 17px;
+      font-weight: 700;
+    }
+    .cart-button span {
+      background: var(--verde-vivo);
+      padding: 3px 7px;
+      border-radius: 20px;
+      margin-left: 5px;
+    }
+
+    .hero {
+      background:
+        linear-gradient(90deg, #0b2b1eeF, #103d25c9),
+        url("https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1800&q=85") center/cover;
+      min-height: 440px;
+      display: flex;
+      align-items: center;
+      color: white;
+    }
+    .hero-content { max-width: 1200px; width: 100%; margin: auto; padding: 70px 7%; }
+    .eyebrow { color: #b8e5a7; font-size: 12px; letter-spacing: 3px; font-weight: 700; }
+    .hero h1 { font-size: clamp(38px, 6vw, 65px); max-width: 700px; line-height: 1.08; margin: 18px 0; }
+    .hero p { max-width: 580px; color: #e5eee6; line-height: 1.7; font-size: 16px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .btn-primary, .btn-outline {
+      display: inline-block;
+      text-decoration: none;
+      padding: 14px 22px;
+      border-radius: 30px;
+      font-weight: 700;
+    }
+    .btn-primary { background: var(--verde-vivo); color: white; }
+    .btn-outline { border: 1px solid #ffffff99; color: white; }
+
+    .intro {
+      max-width: 1050px;
+      margin: auto;
+      padding: 65px 6% 35px;
+      text-align: center;
+    }
+    .section-kicker { color: var(--verde-vivo); font-size: 12px; font-weight: 800; letter-spacing: 2px; }
+    .intro h2, .catalog-heading h2 { color: var(--verde); font-size: clamp(27px, 4vw, 38px); margin: 12px 0; }
+    .intro p { color: var(--gris); line-height: 1.8; max-width: 780px; margin: auto; }
+
+    .catalog { max-width: 1200px; margin: auto; padding: 35px 5% 80px; }
+    .catalog-heading { text-align: center; margin-bottom: 30px; }
+    .catalog-heading p { color: var(--gris); margin-top: 8px; }
+    .categories {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 25px 0;
+    }
+    .category-btn {
+      border: 1px solid #d5dfd3;
+      background: white;
+      color: var(--verde);
+      padding: 11px 19px;
+      border-radius: 25px;
+      font-weight: 700;
+      transition: .2s;
+    }
+    .category-btn.active, .category-btn:hover {
+      background: var(--verde);
+      color: white;
+      border-color: var(--verde);
+    }
+    .search-wrap { max-width: 520px; margin: 0 auto 35px; }
+    .search-wrap input {
+      width: 100%;
+      border: 1px solid #dce3da;
+      background: white;
+      border-radius: 30px;
+      padding: 15px 20px;
+      outline: none;
+    }
+    .search-wrap input:focus { border-color: var(--verde-vivo); }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+    .product {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      border: 1px solid #e8ece6;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .product:hover { transform: translateY(-4px); box-shadow: 0 12px 30px #103d2510; }
+    .product-visual {
+      height: 175px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #e8f0e5, #f7f8f4);
+      color: var(--verde);
+      font-size: 43px;
+    }
+    .product-info { padding: 19px; }
+    .product-category {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--verde-vivo);
+      font-weight: 800;
+    }
+    .product h3 { font-size: 16px; line-height: 1.4; margin: 9px 0 16px; min-height: 44px; }
+    .add-button {
+      width: 100%;
+      padding: 11px;
+      border: 1px solid var(--verde);
+      border-radius: 25px;
+      background: white;
+      color: var(--verde);
+      font-weight: 700;
+      transition: .2s;
+    }
+    .add-button:hover, .add-button.added {
+      background: var(--verde);
+      color: white;
+    }
+    .empty { text-align: center; padding: 40px; color: var(--gris); grid-column: 1/-1; }
+
+    .contact-band {
+      background: var(--verde);
+      color: white;
+      padding: 55px 6%;
+      text-align: center;
+    }
+    .contact-band h2 { font-size: 29px; margin-bottom: 12px; }
+    .contact-band p { color: #dceadd; line-height: 1.7; }
+    .contact-band a {
+      display: inline-block;
+      margin-top: 20px;
+      background: var(--verde-vivo);
+      color: white;
+      text-decoration: none;
+      padding: 13px 24px;
+      border-radius: 30px;
+      font-weight: 700;
+    }
+    footer { background: #0b2418; color: #d7e1d7; padding: 25px 5%; text-align: center; font-size: 12px; }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: #0008;
+      z-index: 40;
+      opacity: 0;
+      visibility: hidden;
+      transition: .25s;
+    }
+    .overlay.open { opacity: 1; visibility: visible; }
+    .cart-panel {
+      position: fixed;
+      z-index: 41;
+      top: 0;
+      right: -440px;
+      width: min(420px, 100%);
+      height: 100%;
+      background: white;
+      display: flex;
+      flex-direction: column;
+      transition: right .3s;
+      box-shadow: -10px 0 35px #0002;
+    }
+    .cart-panel.open { right: 0; }
+    .cart-head { padding: 22px; border-bottom: 1px solid #e8ece6; display: flex; justify-content: space-between; align-items: center; }
+    .cart-head h2 { color: var(--verde); font-size: 21px; }
+    .close-cart { border: 0; background: #edf2eb; border-radius: 50%; width: 35px; height: 35px; font-size: 20px; color: var(--verde); }
+    .cart-items { padding: 18px 22px; overflow-y: auto; flex: 1; }
+    .cart-empty { color: var(--gris); text-align: center; padding: 50px 10px; line-height: 1.6; }
+    .cart-item { padding: 15px 0; border-bottom: 1px solid #edf0eb; display: flex; justify-content: space-between; gap: 12px; }
+    .cart-item h4 { font-size: 14px; line-height: 1.4; }
+    .quantity { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+    .quantity button { width: 27px; height: 27px; border: 0; border-radius: 50%; background: #eaf1e7; color: var(--verde); font-weight: 800; }
+    .quantity span { font-weight: 700; font-size: 13px; }
+    .remove-item { background: none; border: 0; color: #89948a; font-size: 12px; align-self: flex-start; }
+    .cart-bottom { padding: 20px 22px; border-top: 1px solid #e8ece6; }
+    .cart-bottom p { font-size: 12px; color: var(--gris); line-height: 1.5; margin-bottom: 13px; }
+    .whatsapp-button {
+      width: 100%;
+      padding: 15px;
+      background: var(--verde-vivo);
+      color: white;
+      border: 0;
+      border-radius: 30px;
+      font-weight: 800;
+    }
+    .whatsapp-button:disabled { opacity: .45; cursor: not-allowed; }
+
+    @media (max-width: 800px) {
+      .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
+      .nav-links { gap: 13px; }
+      .nav-links a { font-size: 12px; }
+      .brand-name { font-size: 18px; }
+    }
+    @media (max-width: 540px) {
+      .nav { padding: 12px 4%; }
+      .nav-links a { display: none; }
+      .brand-mark { width: 36px; height: 36px; }
+      .brand-name { font-size: 16px; }
+      .cart-button { padding: 10px 12px; font-size: 12px; }
+      .hero { min-height: 410px; }
+      .hero-content { padding: 55px 7%; }
+      .hero p { font-size: 14px; }
+      .intro { padding-top: 48px; }
+      .catalog { padding-left: 4%; padding-right: 4%; }
+      .product-grid { gap: 10px; }
+      .product-visual { height: 125px; font-size: 34px; }
+      .product-info { padding: 12px; }
+      .product h3 { font-size: 13px; min-height: 52px; }
+      .add-button { font-size: 11px; padding: 10px 5px; }
+      .category-btn { font-size: 12px; padding: 9px 13px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav class="nav">
+    <a class="brand" href="#">
+      <div class="brand-mark">✦</div>
+      <div>
+        <div class="brand-name">INGEOVIVO</div>
+        <div class="brand-sub">FORESTAL & COMERCIAL</div>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#inicio">Inicio</a>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <button class="cart-button" onclick="toggleCart(true)">Mi cotización <span id="cart-count">0</span></button>
+  </nav>
+</header>
+
+<main>
+  <section class="hero" id="inicio">
+    <div class="hero-content">
+      <div class="eyebrow">SOLUCIONES PARA EL TERRITORIO</div>
+      <h1>Herramientas para cuidar y transformar nuestro entorno.</h1>
+      <p>Productos especializados para proyectos forestales, biológicos, civiles y ambientales. Explora nuestro portafolio y solicita una cotización.</p>
+      <div class="hero-actions">
+        <a href="#catalogo" class="btn-primary">Explorar catálogo</a>
+        <a href="#contacto" class="btn-outline">Conocer INGEOVIVO</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="intro">
+    <div class="section-kicker">QUIÉNES SOMOS</div>
+    <h2>Comprometidos con soluciones para el entorno</h2>
+    <p>INGEOVIVO nace en 2022 en Medellín, con el compromiso de ofrecer productos y servicios de alta calidad. Trabajamos para aportar a la solución de problemáticas forestales, ambientales, geológicas, arqueológicas y civiles, mediante herramientas que permiten identificar, evaluar y diagnosticar variables cuantitativas y cualitativas para obtener resultados positivos en los ecosistemas.</p>
+  </section>
+
+  <section class="catalog" id="catalogo">
+    <div class="catalog-heading">
+      <div class="section-kicker">NUESTRO PORTAFOLIO</div>
+      <h2>Explora nuestros productos</h2>
+      <p>Selecciona los productos que deseas cotizar. No se muestran precios.</p>
+    </div>
+
+    <div class="categories" id="categories">
+      <button class="category-btn active" data-category="Todos">Todos</button>
+      <button class="category-btn" data-category="Forestal">Forestal</button>
+      <button class="category-btn" data-category="Biología">Biología</button>
+      <button class="category-btn" data-category="Civil">Civil</button>
+      <button class="category-btn" data-category="Ambiental">Ambiental</button>
+    </div>
+
+    <div class="search-wrap">
+      <input type="search" id="search" placeholder="Buscar un producto..." aria-label="Buscar productos">
+    </div>
+    <div class="product-grid" id="product-grid"></div>
+  </section>
+
+  <section class="contact-band" id="contacto">
+    <h2>¿Necesitas alguno de nuestros productos?</h2>
+    <p>Arma tu lista y envíanos tu solicitud. Nuestro equipo te ayudará con la cotización.</p>
+    <a href="https://wa.me/573218765699" target="_blank" rel="noopener">Contactar por WhatsApp</a>
+  </section>
+</main>
+
+<footer>
+  INGEOVIVO · FORESTAL & COMERCIAL · Medellín, Colombia
+</footer>
+
+<div class="overlay" id="overlay" onclick="toggleCart(false)"></div>
+<aside class="cart-panel" id="cart-panel" aria-label="Mi cotización">
+  <div class="cart-head">
+    <h2>Mi cotización</h2>
+    <button class="close-cart" onclick="toggleCart(false)" aria-label="Cerrar">×</button>
+  </div>
+  <div class="cart-items" id="cart-items"></div>
+  <div class="cart-bottom">
+    <p>Revisa los productos y las cantidades. La cotización y los precios se confirmarán por WhatsApp.</p>
+    <button class="whatsapp-button" id="send-order" onclick="sendOrder()" disabled>Enviar solicitud por WhatsApp</button>
+  </div>
+</aside>
+
+<script>
+const products = [
+  ["Gps Garmin Etrex 22x","Forestal"],
+  ["Gps Garmin Etrex 10","Forestal"],
+  ["Pierneras Protector para Motosierrista","Forestal"],
+  ["Rastrillo Forestal Mcleod","Forestal"],
+  ["Canilleras de Proteccion Guadañador Motosierrista","Forestal"],
+  ["Canilleras Protector de Serpientes Polaina","Forestal"],
+  ["Hacha Pulasky","Forestal"],
+  ["Motosierra Stihl MS 250","Forestal"],
+  ["Bota Negra Swat Tipo Militar","Forestal"],
+  ["Combinacion Pico/Pala","Forestal"],
+  ["Monja Forestal","Forestal"],
+  ["Bomba Fumigadora Royal condor 10 litros","Forestal"],
+  ["Batefuego Forestal","Forestal"],
+  ["Trimmer Desjarretadora de 9M Modulos 1,5M y cabezal Truper","Forestal"],
+  ["Tijeron de poda marca Gavilan Colorao","Forestal"],
+  ["Tijeron de Poda Telescopico Marca Fiskars","Forestal"],
+
+  ["Cámara Trampa Bushnell prime Trail 24 MP LowGlow 119932CB","Biología"],
+  ["Cámara Trampa De Rastreo A900i 30MP","Biología"],
+  ["Pinza Plegable Herpetologia Serpiente 130cm","Biología"],
+  ["Gancho Herpetológico Estándar 100cm","Biología"],
+  ["Binoculares Bushnell 8x25mm H20","Biología"],
+  ["Binocular Celestron 10x42","Biología"],
+  ["Prensa Botánica Profesional con Remaches de Latón","Biología"],
+  ["Lupa doble 30x22mm 60x12mm","Biología"],
+  ["Kit de disección Botánica","Biología"],
+
+  ["Marcador de Objeto","Civil"],
+  ["Guante de mecánica marca Dewalt Dpg780","Civil"],
+  ["Lampara Led para obra marca Dewalt Dwht70440","Civil"],
+  ["Luces Solares 28 Led Inalámbricas","Civil"],
+  ["Destornillador de Bateria Ixo Profesional","Civil"],
+  ["Hipsómetro Nikon Forestry Pro ll","Civil"],
+  ["Hipsómetro Haglöf Vertex IV 60º","Civil"],
+
+  ["Termohigrómetro Máxima y Mínima TA218A","Ambiental"],
+  ["Medidor Ambiental 5 en 1 Extech EN300","Ambiental"],
+  ["Medidor de Monóxido de Carbono As8700a","Ambiental"],
+  ["Anemometro Digital Proster TL017","Ambiental"],
+  ["Estación Meteorológica Weather WS-2902","Ambiental"],
+  ["Refractometro De salinidad Extech","Ambiental"],
+  ["Medidor de Humedad de madera 2 en 1Dr. Meter","Ambiental"],
+  ["Medidor Multiparamétrico HI 98194","Ambiental"],
+  ["Medidor de Ph y temperatura Digitalr","Ambiental"],
+  ["Kit medidor Portátil de 9 parámetros Extech DO700","Ambiental"],
+  ["Medidor de conductividad Extech EC 150","Ambiental"],
+  ["Caudalímetro Oceanics Modelo 2030R","Ambiental"],
+  ["Kit de Fotómetro YSI modelo 9500","Ambiental"],
+  ["Kit de Monitoreo de Drenaje Lamotte","Ambiental"],
+  ["Kit de prueba de Agua con Fosfato Chemets","Ambiental"]
+];
+
+const icons = {
+  Forestal: "🌲",
+  Biología: "🔬",
+  Civil: "🦺",
+  Ambiental: "🌿"
+};
+
+let selectedCategory = "Todos";
+let cart = [];
+
+const grid = document.getElementById("product-grid");
+const searchInput = document.getElementById("search");
+
+function renderProducts() {
+  const term = searchInput.value.toLowerCase().trim();
+  const filtered = products.filter(([name, category]) =>
+    (selectedCategory === "Todos" || category === selectedCategory) &&
+    name.toLowerCase().includes(term)
+  );
+
+  grid.innerHTML = "";
+
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="empty">No encontramos productos con esa búsqueda.</div>';
+    return;
+  }
+
+  filtered.forEach(([name, category]) => {
+    const inCart = cart.some(item => item.name === name);
+    const card = document.createElement("article");
+    card.className = "product";
+
+    const visual = document.createElement("div");
+    visual.className = "product-visual";
+    visual.textContent = icons[category];
+
+    const info = document.createElement("div");
+    info.className = "product-info";
+
+    const label = document.createElement("div");
+    label.className = "product-category";
+    label.textContent = category;
+
+    const title = document.createElement("h3");
+    title.textContent = name;
+
+    const button = document.createElement("button");
+    button.className = "add-button" + (inCart ? " added" : "");
+    button.textContent = inCart ? "✓ Agregado a mi lista" : "+ Agregar a mi lista";
+    button.onclick = () => addToCart(name, category);
+
+    info.append(label, title, button);
+    card.append(visual, info);
+    grid.append(card);
+  });
+}
+
+document.querySelectorAll(".category-btn").forEach(button => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".category-btn").forEach(item => item.classList.remove("active"));
+    button.classList.add("active");
+    selectedCategory = button.dataset.category;
+    renderProducts();
+  });
+});
+
+searchInput.addEventListener("input", renderProducts);
+
+function addToCart(name, category) {
+  const existing = cart.find(item => item.name === name);
+  if (existing) {
+    existing.quantity++;
+  } else {
+    cart.push({ name, category, quantity: 1 });
+  }
+  renderProducts();
+  renderCart();
+}
+
+function changeQuantity(name, amount) {
+  const item = cart.find(product => product.name === name);
+  if (!item) return;
+  item.quantity += amount;
+  if (item.quantity <= 0) {
+    cart = cart.filter(product => product.name !== name);
+  }
+  renderCart();
+  renderProducts();
+}
+
+function removeItem(name) {
+  cart = cart.filter(item => item.name !== name);
+  renderCart();
+  renderProducts();
+}
+
+function renderCart() {
+  const container = document.getElementById("cart-items");
+  const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+  document.getElementById("cart-count").textContent = count;
+  document.getElementById("send-order").disabled = cart.length === 0;
+
+  if (!cart.length) {
+    container.innerHTML = '<div class="cart-empty">Tu lista está vacía.<br>Agrega los productos que deseas cotizar.</div>';
+    return;
+  }
+
+  container.innerHTML = "";
+  cart.forEach(item => {
+    const row = document.createElement("div");
+    row.className = "cart-item";
+
+    const details = document.createElement("div");
+    const title = document.createElement("h4");
+    title.textContent = item.name;
+
+    const quantity = document.createElement("div");
+    quantity.className = "quantity";
+
+    const minus = document.createElement("button");
+    minus.textContent = "−";
+    minus.setAttribute("aria-label", "Disminuir cantidad");
+    minus.onclick = () => changeQuantity(item.name, -1);
+
+    const number = document.createElement("span");
+    number.textContent = item.quantity;
+
+    const plus = document.createElement("button");
+    plus.textContent = "+";
+    plus.setAttribute("aria-label", "Aumentar cantidad");
+    plus.onclick = () => changeQuantity(item.name, 1);
+
+    quantity.append(minus, number, plus);
+    details.append(title, quantity);
+
+    const remove = document.createElement("button");
+    remove.className = "remove-item";
+    remove.textContent = "Eliminar";
+    remove.onclick = () => removeItem(item.name);
+
+    row.append(details, remove);
+    container.append(row);
+  });
+}
+
+function toggleCart(open) {
+  document.getElementById("cart-panel").classList.toggle("open", open);
+  document.getElementById("overlay").classList.toggle("open", open);
+  document.body.style.overflow = open ? "hidden" : "";
+}
+
+function sendOrder() {
+  if (!cart.length) return;
+
+  const lines = cart.map(item =>
+    `• ${item.name} — Cantidad: ${item.quantity}`
+  );
+
+  const message = [
+    "¡Hola, INGEOVIVO! Quisiera solicitar una cotización para los siguientes productos:",
+    "",
+    ...lines,
+    "",
+    "Quedo atento/a a la información. ¡Muchas gracias!"
+  ].join("\n");
+
+  const url = "https://wa.me/573218765699?text=" + encodeURIComponent(message);
+  window.open(url, "_blank", "noopener");
+}
+
+renderProducts();
+renderCart();
+</script>
+</body>
+</html>
