@@ -292,6 +292,115 @@
       .add-button { font-size: 11px; padding: 10px 5px; }
       .category-btn { font-size: 12px; padding: 9px 13px; }
     }
+
+    /* Experiencia móvil: navegación y catálogo adaptados al tacto */
+    .mobile-cart-dock { display: none; }
+
+    @media (max-width: 540px) {
+      body { padding-bottom: calc(78px + env(safe-area-inset-bottom)); }
+      header { position: sticky; }
+      .nav { min-height: 62px; padding: 9px 4%; gap: 8px; }
+      .brand { gap: 8px; }
+      .brand-mark { width: 34px; height: 34px; font-size: 19px; }
+      .brand-name { font-size: 15px; letter-spacing: 1.2px; }
+      .brand-sub { font-size: 8px; letter-spacing: 1.5px; }
+      .nav-links { display: none; }
+      .nav > .cart-button { padding: 9px 11px; font-size: 11px; white-space: nowrap; }
+
+      .hero {
+        min-height: 350px;
+        background-position: center;
+        text-align: left;
+      }
+      .hero-content { padding: 42px 6% 38px; }
+      .eyebrow { font-size: 10px; letter-spacing: 2px; }
+      .hero h1 { font-size: clamp(30px, 8.5vw, 39px); line-height: 1.12; margin: 13px 0; }
+      .hero p { font-size: 13px; line-height: 1.6; max-width: 340px; }
+      .hero-actions { margin-top: 20px; gap: 9px; }
+      .btn-primary, .btn-outline { padding: 11px 15px; font-size: 12px; }
+      .btn-outline { display: none; }
+
+      .intro { padding: 38px 6% 20px; }
+      .section-kicker { font-size: 10px; letter-spacing: 1.7px; }
+      .intro h2, .catalog-heading h2 { font-size: 25px; line-height: 1.2; margin: 9px 0; }
+      .intro p { font-size: 12px; line-height: 1.65; }
+
+      .catalog { padding: 27px 4% 32px; }
+      .catalog-heading { margin-bottom: 20px; }
+      .catalog-heading p { font-size: 12px; line-height: 1.5; }
+      .categories {
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        margin: 18px -4% 15px;
+        padding: 2px 4% 9px;
+        gap: 8px;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+      }
+      .categories::-webkit-scrollbar { display: none; }
+      .category-btn { flex: 0 0 auto; padding: 9px 15px; font-size: 11px; }
+      .search-wrap { margin: 0 0 20px; }
+      .search-wrap input {
+        padding: 13px 16px;
+        border-radius: 13px;
+        font-size: 13px;
+        background: #fff;
+      }
+      .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; }
+      .product { border-radius: 12px; box-shadow: 0 3px 12px #103d2509; }
+      .product:hover { transform: none; box-shadow: 0 3px 12px #103d2509; }
+      .product-visual { height: 132px; font-size: 33px; }
+      .product-info { padding: 11px 10px 12px; }
+      .product-category { font-size: 9px; letter-spacing: 1px; }
+      .product h3 { font-size: 12px; line-height: 1.35; min-height: 49px; margin: 7px 0 11px; }
+      .add-button { min-height: 36px; font-size: 10px; padding: 8px 4px; border-radius: 9px; }
+      .empty { font-size: 13px; padding: 30px 10px; }
+
+      .contact-band { padding: 38px 6%; }
+      .contact-band h2 { font-size: 23px; line-height: 1.2; }
+      .contact-band p { font-size: 12px; }
+      .contact-band a { padding: 12px 19px; font-size: 12px; }
+      footer { padding: 20px 5%; font-size: 10px; }
+
+      .mobile-cart-dock {
+        display: flex;
+        position: fixed;
+        z-index: 30;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 11px 4% calc(11px + env(safe-area-inset-bottom));
+        background: rgba(255,255,255,.97);
+        border-top: 1px solid #e5ebe2;
+        box-shadow: 0 -5px 22px #103d2512;
+        backdrop-filter: blur(12px);
+      }
+      .mobile-cart-summary { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+      .mobile-cart-label { color: #758176; font-size: 8px; letter-spacing: 1px; font-weight: 800; }
+      .mobile-cart-summary strong { color: var(--verde); font-size: 11px; white-space: nowrap; }
+      .mobile-cart-dock button {
+        flex: 0 0 auto;
+        border: 0;
+        border-radius: 10px;
+        background: var(--verde);
+        color: white;
+        padding: 12px 15px;
+        font-size: 11px;
+        font-weight: 800;
+      }
+      .mobile-cart-dock button span { color: #b9e7a9; margin-left: 7px; font-size: 15px; }
+      .cart-panel { width: 100%; }
+      .cart-head { padding: 18px 18px; }
+      .cart-items { padding: 14px 18px; }
+      .cart-bottom { padding: 16px 18px calc(16px + env(safe-area-inset-bottom)); }
+      .whatsapp-button { border-radius: 12px; }
+    }
+
   </style>
 </head>
 <body>
@@ -313,6 +422,15 @@
     <button class="cart-button" onclick="toggleCart(true)">Mi cotización <span id="cart-count">0</span></button>
   </nav>
 </header>
+
+<div class="mobile-cart-dock">
+  <div class="mobile-cart-summary">
+    <span class="mobile-cart-label">TU LISTA DE COTIZACIÓN</span>
+    <strong><span id="mobile-cart-count">0</span> productos seleccionados</strong>
+  </div>
+  <button type="button" onclick="toggleCart(true)">Ver mi lista <span aria-hidden="true">→</span></button>
+</div>
+
 
 <main>
   <section class="hero" id="inicio">
@@ -532,6 +650,8 @@ function renderCart() {
   const container = document.getElementById("cart-items");
   const count = cart.reduce((sum, item) => sum + item.quantity, 0);
   document.getElementById("cart-count").textContent = count;
+  const mobileCount = document.getElementById("mobile-cart-count");
+  if (mobileCount) mobileCount.textContent = count;
   document.getElementById("send-order").disabled = cart.length === 0;
 
   if (!cart.length) {
