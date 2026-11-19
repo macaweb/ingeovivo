@@ -283,6 +283,101 @@
       min-height: 4.2em;
     }
     .product .add-button { margin-top: auto; }
+    .product-description-preview {
+      color: #66736a;
+      font-size: 12px;
+      line-height: 1.45;
+      min-height: 2.9em;
+      margin: 0 0 5px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .product-more-button {
+      align-self: flex-start;
+      padding: 2px 0 10px;
+      border: 0;
+      background: transparent;
+      color: var(--verde-vivo);
+      font-size: 12px;
+      font-weight: 800;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      cursor: pointer;
+    }
+    .image-viewer {
+      overflow-y: auto;
+      align-items: center;
+      justify-content: center;
+    }
+    .product-detail-panel {
+      position: relative;
+      width: min(100%, 900px);
+      max-height: calc(100vh - 48px);
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(260px, .95fr);
+      align-items: center;
+      gap: 28px;
+      padding: 34px;
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 18px 60px #0006;
+    }
+    .product-detail-panel > img {
+      display: block;
+      width: 100%;
+      max-height: 58vh;
+      object-fit: contain;
+      background: #fff;
+      border-radius: 12px;
+    }
+    .product-detail-copy { padding: 8px 10px 8px 0; }
+    .product-detail-category {
+      color: var(--verde-vivo);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .product-detail-copy h2 {
+      margin: 10px 0 14px;
+      color: var(--verde);
+      font-size: clamp(20px, 2.5vw, 28px);
+      line-height: 1.25;
+    }
+    .product-detail-copy p {
+      margin: 0;
+      color: #58665d;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+    .product-detail-panel .image-viewer-close {
+      position: sticky;
+      top: 0;
+      float: right;
+      margin: -18px -18px 0 0;
+      z-index: 2;
+      background: var(--verde);
+      color: #fff;
+      border: 0;
+    }
+    @media (max-width: 650px) {
+      .product-detail-panel {
+        width: 100%;
+        max-height: calc(100vh - 28px);
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 22px 18px 24px;
+        border-radius: 16px;
+      }
+      .product-detail-panel > img { max-height: 38vh; }
+      .product-detail-copy { padding: 0 2px; }
+      .product-detail-copy h2 { font-size: 20px; margin: 7px 0 10px; }
+      .product-detail-copy p { font-size: 14px; line-height: 1.6; }
+      .product-detail-panel .image-viewer-close { margin: -8px -5px 0 0; }
+    }
     .add-button {
       width: 100%;
       padding: 11px;
@@ -513,7 +608,9 @@
       .product-visual { height: 132px; font-size: 33px; }
       .product-info { padding: 11px 10px 12px; }
       .product-category { font-size: 9px; letter-spacing: 1px; }
-      .product h3 { font-size: 12px; line-height: 1.35; min-height: 4.05em; margin: 7px 0 11px; }
+      .product h3 { font-size: 12px; line-height: 1.35; min-height: 4.05em; margin: 7px 0 9px; }
+      .product-description-preview { font-size: 10px; line-height: 1.4; min-height: 2.8em; }
+      .product-more-button { font-size: 10px; padding-bottom: 9px; }
       .add-button { min-height: 36px; font-size: 10px; padding: 8px 4px; border-radius: 9px; }
       .empty { font-size: 13px; padding: 30px 10px; }
 
@@ -890,10 +987,16 @@
   </div>
 </aside>
 
-<div class="image-viewer" id="image-viewer" role="dialog" aria-modal="true" aria-label="Vista ampliada del producto" onclick="if(event.target===this) closeImageViewer()">
-  <button class="image-viewer-close" id="image-viewer-close" type="button" onclick="closeImageViewer()" aria-label="Cerrar imagen ampliada">×</button>
-  <img id="image-viewer-photo" src="" alt="">
-  <div class="image-viewer-caption" id="image-viewer-caption"></div>
+<div class="image-viewer" id="image-viewer" role="dialog" aria-modal="true" aria-label="Detalles del producto" onclick="if(event.target===this) closeImageViewer()">
+  <div class="product-detail-panel">
+    <button class="image-viewer-close" id="image-viewer-close" type="button" onclick="closeImageViewer()" aria-label="Cerrar detalles">×</button>
+    <img id="image-viewer-photo" src="" alt="">
+    <div class="product-detail-copy">
+      <span class="product-detail-category" id="image-viewer-category"></span>
+      <h2 id="image-viewer-caption"></h2>
+      <p id="image-viewer-description"></p>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -950,6 +1053,56 @@ const products = [
   ["Kit de prueba de Agua con Fosfato Chemets", "Ambiental", "images/47-kit-fosfato-chemets.jpg"]
 ];
 
+const productDescriptions = {
+  "Gps Garmin Etrex 22x": "GPS portátil diseñado para orientarse en recorridos de campo, registrar puntos de interés y consultar rutas durante actividades forestales, ambientales y de exploración.",
+  "Gps Garmin Etrex 10": "Equipo GPS compacto para navegación básica en campo, marcado de ubicaciones y seguimiento de recorridos en actividades al aire libre.",
+  "Pierneras Protector para Motosierrista": "Elemento de protección para las piernas durante labores con motosierra. Debe utilizarse junto con los demás equipos de protección y según las indicaciones del fabricante.",
+  "Rastrillo Forestal Mcleod": "Herramienta manual para labores de control y mantenimiento forestal, como remover material vegetal, acondicionar el terreno y apoyar tareas de prevención de incendios.",
+  "Canilleras de Proteccion Guadañador Motosierrista": "Protección para la zona baja de las piernas durante trabajos de guadaña y actividades de campo. Complementa el equipo de protección personal.",
+  "Canilleras Protector de Serpientes Polaina": "Polainas diseñadas para cubrir la parte inferior de las piernas en recorridos de campo y actividades de observación en zonas donde puede haber serpientes.",
+  "Hacha Pulasky": "Herramienta forestal combinada que permite realizar trabajos manuales de corte y remoción de suelo en labores de mantenimiento y manejo de áreas naturales.",
+  "Motosierra Stihl MS 250": "Equipo motorizado para trabajos de corte de madera y manejo forestal. Su operación requiere capacitación, mantenimiento y elementos de protección adecuados.",
+  "Bota Negra Swat Tipo Militar": "Calzado de uso rudo pensado para recorridos y jornadas de trabajo en terrenos variados, con protección y soporte para actividades de campo.",
+  "Combinacion Pico/Pala": "Herramienta manual que reúne funciones de pico y pala para excavar, remover tierra y realizar labores generales de adecuación del terreno.",
+  "Monja Forestal": "Accesorio de protección que cubre cabeza y cuello para ayudar a resguardar al usuario durante trabajos forestales y actividades al aire libre.",
+  "Bomba Fumigadora Royal condor 10 litros": "Equipo de aspersión portátil para distribuir líquidos en labores agrícolas, de jardinería y mantenimiento de áreas verdes, siguiendo siempre las instrucciones del producto aplicado.",
+  "Batefuego Forestal": "Herramienta manual utilizada por personal capacitado para apoyar labores de control y extinción de fuego en vegetación, dentro de protocolos de seguridad forestal.",
+  "Trimmer Desjarretadora de 9M Modulos 1,5M y cabezal Truper": "Herramienta modular de alcance extendido para labores de poda y mantenimiento de vegetación en zonas de difícil acceso. Usar conforme a las instrucciones del fabricante.",
+  "Tijeron de poda marca Gavilan Colorao": "Herramienta manual para cortar ramas y realizar podas de mantenimiento en árboles, arbustos y otras plantas.",
+  "Tijeron de Poda Telescopico Marca Fiskars": "Tijera de poda con alcance telescópico para facilitar el corte de ramas ubicadas a mayor altura desde una posición estable en el suelo.",
+  "Cámara Trampa Bushnell prime Trail 24 MP LowGlow 119932CB": "Cámara de monitoreo de fauna que se activa mediante movimiento para registrar fotografías de animales en su entorno, útil en observación e investigación de vida silvestre.",
+  "Cámara Trampa De Rastreo A900i 30MP": "Cámara de rastreo para registrar actividad de fauna mediante imágenes activadas por movimiento, apoyando inventarios, monitoreo y observación de especies.",
+  "Pinza Plegable Herpetologia Serpiente 130cm": "Herramienta de largo alcance destinada al manejo especializado de serpientes por personal capacitado, siguiendo protocolos de bienestar animal y seguridad.",
+  "Gancho Herpetológico Estándar 100cm": "Instrumento utilizado por personal especializado para guiar o movilizar serpientes con distancia de seguridad, minimizando el contacto directo y el estrés del animal.",
+  "Binoculares Bushnell 8x25mm H20": "Binoculares compactos para observar aves, fauna y elementos del paisaje a distancia durante recorridos, monitoreos y actividades de campo.",
+  "Binocular Celestron 10x42": "Instrumento óptico para ampliar la observación de objetos lejanos, útil en avistamiento de aves, seguimiento de fauna y exploración del entorno.",
+  "Prensa Botánica Profesional con Remaches de Latón": "Equipo para prensar y mantener muestras vegetales organizadas durante la preparación de ejemplares botánicos para estudio, identificación o colección.",
+  "Lupa doble 30x22mm 60x12mm": "Lupa de doble aumento para examinar detalles pequeños de hojas, insectos, minerales y otras muestras durante actividades de observación e identificación.",
+  "Kit de disección Botánica": "Conjunto de instrumentos para realizar prácticas de observación y disección de estructuras vegetales en actividades académicas y de laboratorio.",
+  "Marcador de Objeto": "Elemento para identificar, señalar o referenciar puntos y objetos en trabajos de campo, levantamientos y actividades técnicas.",
+  "Guante de mecánica marca Dewalt Dpg780": "Guantes de trabajo para proteger las manos y mejorar el agarre durante tareas de mecánica, mantenimiento y manipulación de herramientas.",
+  "Lampara Led para obra marca Dewalt Dwht70440": "Lámpara LED portátil para proporcionar iluminación de apoyo en obras, inspecciones y trabajos de mantenimiento en espacios con poca luz.",
+  "Luces Solares 28 Led Inalámbricas": "Luminarias que aprovechan la energía solar para ofrecer iluminación exterior sin conexión directa a la red eléctrica, según las condiciones de instalación y carga.",
+  "Destornillador de Bateria Ixo Profesional": "Herramienta eléctrica compacta para facilitar tareas de atornillado y desatornillado en trabajos de instalación, montaje y mantenimiento.",
+  "Hipsómetro Nikon Forestry Pro ll": "Instrumento de medición forestal utilizado para estimar alturas y distancias en árboles y elementos del terreno, apoyando inventarios y evaluaciones de campo.",
+  "Hipsómetro Haglöf Vertex IV 60º": "Equipo profesional para mediciones forestales, especialmente estimación de alturas y distancias, útil en inventarios y estudios de recursos naturales.",
+  "Termohigrómetro Máxima y Mínima TA218A": "Instrumento para consultar temperatura y humedad relativa, con registro de valores máximos y mínimos para seguimiento de condiciones ambientales.",
+  "Medidor Ambiental 5 en 1 Extech EN300": "Equipo portátil que reúne varias mediciones ambientales, como velocidad del aire, temperatura, humedad, luz y sonido, según las funciones del modelo.",
+  "Medidor de Monóxido de Carbono As8700a": "Instrumento para detectar y medir la concentración de monóxido de carbono en el ambiente, útil en inspecciones y evaluaciones de calidad del aire.",
+  "Anemometro Digital Proster TL017": "Medidor portátil de velocidad del viento para evaluaciones ambientales, inspecciones y trabajos de campo relacionados con las condiciones del aire.",
+  "Estación Meteorológica Weather WS-2902": "Estación para observar y registrar variables meteorológicas locales, como temperatura, humedad, viento y precipitación, de acuerdo con sus sensores.",
+  "Refractometro De salinidad Extech": "Instrumento óptico para estimar la concentración de salinidad en muestras líquidas, útil en controles y análisis de agua.",
+  "Medidor de Humedad de madera 2 en 1Dr. Meter": "Equipo para medir el contenido de humedad en madera y apoyar controles de secado, almacenamiento y evaluación del material.",
+  "Medidor Multiparamétrico HI 98194": "Equipo portátil para analizar distintos parámetros de calidad del agua en campo. Permite apoyar monitoreos y evaluaciones de cuerpos de agua.",
+  "Medidor de Ph y temperatura Digital": "Instrumento portátil para medir el pH y la temperatura de una muestra, útil en controles básicos y seguimiento de calidad del agua.",
+  "Kit medidor Portátil de 9 parámetros Extech DO700": "Equipo portátil multiparámetro para realizar mediciones de calidad del agua en campo. Los parámetros disponibles dependen de la configuración y los sensores incluidos.",
+  "Medidor de conductividad Extech EC 150": "Instrumento portátil para medir la conductividad eléctrica de líquidos, parámetro utilizado en evaluaciones de calidad y composición del agua.",
+  "Caudalímetro Oceanics Modelo 2030R": "Equipo para medir la velocidad o el caudal del agua en evaluaciones hidrológicas y monitoreos de corrientes, de acuerdo con su configuración.",
+  "Kit de Fotómetro YSI modelo 9500": "Kit de análisis fotométrico para determinar concentraciones de diferentes parámetros en muestras de agua mediante pruebas y reactivos compatibles.",
+  "Kit de Monitoreo de Drenaje Lamotte": "Conjunto de análisis para apoyar el monitoreo de muestras de drenaje y la evaluación de parámetros relacionados con la calidad del agua.",
+  "Kit de prueba de Agua con Fosfato Chemets": "Kit colorimétrico para determinar la presencia o concentración de fosfato en muestras de agua mediante ampollas y procedimiento de prueba."
+};
+
 const icons = {
   Forestal: "🌲",
   Biología: "🔬",
@@ -990,12 +1143,14 @@ function saveCart() {
 const grid = document.getElementById("product-grid");
 const searchInput = document.getElementById("search");
 
-function openImageViewer(src, name) {
+function openImageViewer(src, name, category, description) {
   const viewer = document.getElementById("image-viewer");
   const photo = document.getElementById("image-viewer-photo");
   photo.src = src;
   photo.alt = name;
   document.getElementById("image-viewer-caption").textContent = name;
+  document.getElementById("image-viewer-category").textContent = category || "";
+  document.getElementById("image-viewer-description").textContent = description || "Consulta con nuestro equipo para conocer más detalles de este producto.";
   viewer.classList.add("open");
   document.body.style.overflow = "hidden";
   document.getElementById("image-viewer-close")?.focus();
@@ -1088,12 +1243,13 @@ function renderProducts() {
     productImage.loading = "lazy";
     productImage.setAttribute("role", "button");
     productImage.setAttribute("tabindex", "0");
-    productImage.setAttribute("aria-label", "Ampliar imagen de " + name);
-    productImage.onclick = () => openImageViewer(imagePath, name);
+    productImage.setAttribute("aria-label", "Ver detalles de " + name);
+    const description = productDescriptions[name] || "Consulta con nuestro equipo para conocer más detalles de este producto.";
+    productImage.onclick = () => openImageViewer(imagePath, name, category, description);
     productImage.onkeydown = event => {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
-        openImageViewer(imagePath, name);
+        openImageViewer(imagePath, name, category, description);
       }
     };
     productImage.onerror = () => { visual.textContent = icons[category]; };
@@ -1109,13 +1265,24 @@ function renderProducts() {
     const title = document.createElement("h3");
     title.textContent = name;
 
+    const description = productDescriptions[name] || "Consulta con nuestro equipo para conocer más detalles de este producto.";
+    const preview = document.createElement("p");
+    preview.className = "product-description-preview";
+    preview.textContent = description;
+
+    const moreButton = document.createElement("button");
+    moreButton.type = "button";
+    moreButton.className = "product-more-button";
+    moreButton.textContent = "Ver más";
+    moreButton.onclick = () => openImageViewer(imagePath, name, category, description);
+
     const button = document.createElement("button");
     const showingAddedFeedback = recentlyAdded.has(name);
     button.className = "add-button" + (showingAddedFeedback ? " added" : "");
     button.textContent = showingAddedFeedback ? "✓ Agregado" : "+ Agregar a mi lista";
     button.onclick = () => addToCart(name, category);
 
-    info.append(label, title, button);
+    info.append(label, title, preview, moreButton, button);
     card.append(visual, info);
     grid.append(card);
   });
