@@ -145,16 +145,40 @@
       color: white;
       border-color: var(--verde);
     }
-    .search-wrap { max-width: 520px; margin: 0 auto 35px; }
-    .search-wrap input {
-      width: 100%;
-      border: 1px solid #dce3da;
-      background: white;
-      border-radius: 30px;
-      padding: 15px 20px;
-      outline: none;
+    .search-wrap {
+      position: relative;
+      max-width: 620px;
+      margin: 0 auto 22px;
     }
-    .search-wrap input:focus { border-color: var(--verde-vivo); }
+    .search-wrap .search-icon {
+      position: absolute;
+      left: 19px;
+      top: 50%;
+      width: 20px;
+      height: 20px;
+      transform: translateY(-50%);
+      color: #66816b;
+      pointer-events: none;
+    }
+    .search-wrap input {
+      box-sizing: border-box;
+      width: 100%;
+      min-height: 54px;
+      border: 1px solid #dce5da;
+      background: #fff;
+      border-radius: 16px;
+      padding: 15px 20px 15px 52px;
+      outline: none;
+      color: #183d28;
+      font-size: 15px;
+      box-shadow: 0 5px 18px #103d2508;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .search-wrap input::placeholder { color: #89978b; }
+    .search-wrap input:focus {
+      border-color: var(--verde-vivo);
+      box-shadow: 0 0 0 4px #49a92318, 0 7px 20px #103d250c;
+    }
 
     .product-grid {
       display: grid;
@@ -654,16 +678,20 @@
       <p>Selecciona los productos que deseas cotizar. No se muestran precios.</p>
     </div>
 
+    <div class="search-wrap">
+      <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"></circle>
+        <path d="m20 20-4-4"></path>
+      </svg>
+      <input type="search" id="search" placeholder="¿Qué producto estás buscando?" aria-label="Buscar productos por nombre">
+    </div>
+
     <div class="categories" id="categories">
       <button class="category-btn active" data-category="Todos">Todos</button>
       <button class="category-btn" data-category="Forestal">Forestal</button>
       <button class="category-btn" data-category="Biología">Biología</button>
       <button class="category-btn" data-category="Civil">Civil</button>
       <button class="category-btn" data-category="Ambiental">Ambiental</button>
-    </div>
-
-    <div class="search-wrap">
-      <input type="search" id="search" placeholder="Buscar un producto..." aria-label="Buscar productos">
     </div>
     <div class="product-grid" id="product-grid"></div>
   </section>
