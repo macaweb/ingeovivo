@@ -481,6 +481,12 @@
       .product .add-button { margin-top: auto; }
     }
 
+
+    @media (max-width: 540px) {
+      .mobile-cart-dock { display: none; }
+      .mobile-cart-dock.has-items { display: flex; }
+    }
+
   </style>
 </head>
 <body>
@@ -757,6 +763,8 @@ function renderCart() {
   document.getElementById("cart-count").textContent = count;
   const mobileCount = document.getElementById("mobile-cart-count");
   if (mobileCount) mobileCount.textContent = count;
+  const mobileDock = document.querySelector(".mobile-cart-dock");
+  if (mobileDock) mobileDock.classList.toggle("has-items", count > 0);
   document.getElementById("send-order").disabled = cart.length === 0;
 
   if (!cart.length) {
