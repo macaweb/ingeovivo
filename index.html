@@ -1244,12 +1244,12 @@ function renderProducts() {
     productImage.setAttribute("role", "button");
     productImage.setAttribute("tabindex", "0");
     productImage.setAttribute("aria-label", "Ver detalles de " + name);
-    const description = productDescriptions[name] || "Consulta con nuestro equipo para conocer más detalles de este producto.";
-    productImage.onclick = () => openImageViewer(imagePath, name, category, description);
+    const imageDescription = productDescriptions[name] || "Consulta con nuestro equipo para conocer más detalles de este producto.";
+    productImage.onclick = () => openImageViewer(imagePath, name, category, imageDescription);
     productImage.onkeydown = event => {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
-        openImageViewer(imagePath, name, category, description);
+        openImageViewer(imagePath, name, category, imageDescription);
       }
     };
     productImage.onerror = () => { visual.textContent = icons[category]; };
