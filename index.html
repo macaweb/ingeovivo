@@ -877,6 +877,33 @@ const icons = {
 let selectedCategory = "Todos";
 let cart = [];
 
+try {
+  const savedCart = JSON.parse(localStorage.getItem("ingeovivo-cart") || "[]");
+  if (Array.isArray(savedCart)) {
+    cart = savedCart
+      .filter(item => item && products.some(product => product[0] === item.name))
+      .map(item => {
+        const product = products.find(entry => entry[0] === item.name);
+        return {
+          name: product[0],
+          category: product[1],
+          imagePath: product[2],
+          quantity: Math.max(1, Math.floor(Number(item.quantity) || 1))
+        };
+      });
+  }
+} catch (error) {
+  cart = [];
+}
+
+function saveCart() {
+  try {
+    localStorage.setItem("ingeovivo-cart", JSON.stringify(cart));
+  } catch (error) {
+    console.warn("No fue posible guardar la lista en este dispositivo.", error);
+  }
+}
+
 const grid = document.getElementById("product-grid");
 const searchInput = document.getElementById("search");
 
@@ -999,6 +1026,7 @@ function addToCart(name, category) {
   } else {
     cart.push({ name, category, imagePath, quantity: 1 });
   }
+  saveCart();
   renderProducts();
   renderCart();
 }
@@ -1010,12 +1038,14 @@ function changeQuantity(name, amount) {
   if (item.quantity <= 0) {
     cart = cart.filter(product => product.name !== name);
   }
+  saveCart();
   renderCart();
   renderProducts();
 }
 
 function removeItem(name) {
   cart = cart.filter(item => item.name !== name);
+  saveCart();
   renderCart();
   renderProducts();
 }
