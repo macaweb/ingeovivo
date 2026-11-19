@@ -620,10 +620,10 @@
 
   
     /* Brisa suave con hojas decorativas */
-    body > *:not(.wind-leaves) { position: relative; z-index: 1; }
+    body { isolation: isolate; }
     .wind-leaves {
       position: fixed; inset: 0; overflow: hidden; pointer-events: none;
-      z-index: 0; contain: strict;
+      z-index: -1; contain: strict;
     }
     .wind-leaf {
       position: absolute; top: -12vh; width: 25px; height: 25px;
