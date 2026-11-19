@@ -675,6 +675,19 @@
       }
     }
 
+
+    /* Evitar recortes por ampliación al pasar el cursor en escritorio */
+    @media (min-width: 801px) {
+      .product-visual img,
+      .product-visual img:hover,
+      .product-visual img:active {
+        transform: none;
+      }
+      .product-visual img:hover {
+        filter: drop-shadow(0 5px 7px #103d2520);
+      }
+    }
+
     /* Brisa suave con hojas decorativas */
     body { isolation: isolate; }
     .wind-leaves {
