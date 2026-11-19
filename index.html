@@ -122,10 +122,11 @@
       box-shadow: 0 9px 23px #49a92366;
       filter: brightness(1.08);
     }
-    .btn-primary:active {
-      transform: scale(1.09);
-      box-shadow: 0 3px 12px #49a92355;
-      filter: brightness(1.12);
+    .btn-primary:active,
+    .btn-primary.tap-zoom {
+      transform: scale(1.18);
+      box-shadow: 0 12px 30px #49a92399;
+      filter: brightness(1.2);
     }
     .btn-primary:focus-visible {
       outline: 3px solid #b8e5a7;
@@ -980,6 +981,14 @@ document.querySelectorAll(".category-btn").forEach(button => {
 });
 
 searchInput.addEventListener("input", renderProducts);
+
+const exploreButton = document.querySelector(".btn-primary");
+if (exploreButton) {
+  exploreButton.addEventListener("pointerdown", () => exploreButton.classList.add("tap-zoom"));
+  ["pointerup", "pointercancel", "pointerleave"].forEach(eventName => {
+    exploreButton.addEventListener(eventName, () => exploreButton.classList.remove("tap-zoom"));
+  });
+}
 
 function addToCart(name, category) {
   const existing = cart.find(item => item.name === name);
