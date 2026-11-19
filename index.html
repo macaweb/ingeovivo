@@ -1166,7 +1166,7 @@ function sendOrder() {
   if (!cart.length) return;
 
   const lines = cart.map(item =>
-    `• *${item.name}* — Cantidad: ${item.quantity}`
+    `• ${item.name} — Cantidad: ${item.quantity}`
   );
 
   const message = [
