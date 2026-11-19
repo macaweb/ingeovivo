@@ -618,9 +618,46 @@
       }
     }
 
+  
+    /* Brisa suave con hojas decorativas */
+    body > *:not(.wind-leaves) { position: relative; z-index: 1; }
+    .wind-leaves {
+      position: fixed; inset: 0; overflow: hidden; pointer-events: none;
+      z-index: 0; contain: strict;
+    }
+    .wind-leaf {
+      position: absolute; top: -12vh; width: 25px; height: 25px;
+      color: #6f9b62; opacity: 0; filter: drop-shadow(0 2px 3px #103d2510);
+      animation: leaf-breeze 19s linear infinite;
+    }
+    .wind-leaf svg { display: block; width: 100%; height: 100%; fill: currentColor; }
+    .wind-leaf:nth-child(1) { left: 12%; animation-delay: -3s; animation-duration: 21s; }
+    .wind-leaf:nth-child(2) { left: 39%; width: 18px; height: 18px; animation-delay: -12s; animation-duration: 24s; opacity: .0; }
+    .wind-leaf:nth-child(3) { left: 68%; width: 22px; height: 22px; animation-delay: -8s; animation-duration: 20s; }
+    .wind-leaf:nth-child(4) { left: 88%; width: 16px; height: 16px; animation-delay: -16s; animation-duration: 26s; }
+    @keyframes leaf-breeze {
+      0% { transform: translate3d(-8px, -5vh, 0) rotate(-25deg); opacity: 0; }
+      10% { opacity: .24; }
+      30% { transform: translate3d(42px, 28vh, 0) rotate(75deg); }
+      55% { transform: translate3d(-24px, 58vh, 0) rotate(155deg); opacity: .2; }
+      78% { transform: translate3d(55px, 86vh, 0) rotate(245deg); opacity: .16; }
+      100% { transform: translate3d(12px, 112vh, 0) rotate(330deg); opacity: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .wind-leaves { display: none; }
+    }
+
   </style>
 </head>
 <body>
+
+<div class="wind-leaves" aria-hidden="true">
+  <span class="wind-leaf"><svg viewBox="0 0 32 32"><path d="M27.8 3.5C15.2 3.1 5.1 8.1 4 18.2c-.6 5.1 2.5 8.4 7.1 8.1C21.7 25.5 27.1 15.7 27.8 3.5ZM8 23.8 23.5 8.2C17 13 12.3 18.1 8 23.8Z"/></svg></span>
+  <span class="wind-leaf"><svg viewBox="0 0 32 32"><path d="M27.8 3.5C15.2 3.1 5.1 8.1 4 18.2c-.6 5.1 2.5 8.4 7.1 8.1C21.7 25.5 27.1 15.7 27.8 3.5ZM8 23.8 23.5 8.2C17 13 12.3 18.1 8 23.8Z"/></svg></span>
+  <span class="wind-leaf"><svg viewBox="0 0 32 32"><path d="M27.8 3.5C15.2 3.1 5.1 8.1 4 18.2c-.6 5.1 2.5 8.4 7.1 8.1C21.7 25.5 27.1 15.7 27.8 3.5ZM8 23.8 23.5 8.2C17 13 12.3 18.1 8 23.8Z"/></svg></span>
+  <span class="wind-leaf"><svg viewBox="0 0 32 32"><path d="M27.8 3.5C15.2 3.1 5.1 8.1 4 18.2c-.6 5.1 2.5 8.4 7.1 8.1C21.7 25.5 27.1 15.7 27.8 3.5ZM8 23.8 23.5 8.2C17 13 12.3 18.1 8 23.8Z"/></svg></span>
+</div>
+
 
 <header>
   <nav class="nav">
