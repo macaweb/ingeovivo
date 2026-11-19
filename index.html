@@ -990,7 +990,7 @@ function renderProducts() {
     const button = document.createElement("button");
     const showingAddedFeedback = recentlyAdded.has(name);
     button.className = "add-button" + (showingAddedFeedback ? " added" : "");
-    button.textContent = showingAddedFeedback ? "✓ Agregado a mi lista" : "+ Agregar a mi lista";
+    button.textContent = showingAddedFeedback ? "✓ Agregado" : "+ Agregar a mi lista";
     button.onclick = () => addToCart(name, category);
 
     info.append(label, title, button);
