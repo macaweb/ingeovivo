@@ -109,7 +109,28 @@
       border-radius: 30px;
       font-weight: 700;
     }
-    .btn-primary { background: var(--verde-vivo); color: white; }
+    .btn-primary {
+      background: var(--verde-vivo);
+      color: white;
+      box-shadow: 0 5px 16px #49a92345;
+      transform-origin: center;
+      transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px) scale(1.045);
+      box-shadow: 0 9px 23px #49a92366;
+      filter: brightness(1.08);
+    }
+    .btn-primary:active {
+      transform: scale(1.09);
+      box-shadow: 0 3px 12px #49a92355;
+      filter: brightness(1.12);
+    }
+    .btn-primary:focus-visible {
+      outline: 3px solid #b8e5a7;
+      outline-offset: 4px;
+    }
     .btn-outline { border: 1px solid #ffffff99; color: white; }
 
     .intro {
