@@ -988,8 +988,9 @@ function renderProducts() {
     title.textContent = name;
 
     const button = document.createElement("button");
-    button.className = "add-button" + (inCart ? " added" : "");
-    button.textContent = inCart ? "✓ Agregado a mi lista" : "+ Agregar a mi lista";
+    const showingAddedFeedback = recentlyAdded.has(name);
+    button.className = "add-button" + (showingAddedFeedback ? " added" : "");
+    button.textContent = showingAddedFeedback ? "✓ Agregado a mi lista" : "+ Agregar a mi lista";
     button.onclick = () => addToCart(name, category);
 
     info.append(label, title, button);
@@ -1017,6 +1018,9 @@ if (exploreButton) {
   });
 }
 
+const recentlyAdded = new Set();
+const addedFeedbackTimers = new Map();
+
 function addToCart(name, category) {
   const existing = cart.find(item => item.name === name);
   const productData = products.find(product => product[0] === name);
@@ -1027,8 +1031,18 @@ function addToCart(name, category) {
     cart.push({ name, category, imagePath, quantity: 1 });
   }
   saveCart();
+
+  recentlyAdded.add(name);
+  if (addedFeedbackTimers.has(name)) clearTimeout(addedFeedbackTimers.get(name));
   renderProducts();
   renderCart();
+
+  const feedbackTimer = setTimeout(() => {
+    recentlyAdded.delete(name);
+    addedFeedbackTimers.delete(name);
+    renderProducts();
+  }, 1800);
+  addedFeedbackTimers.set(name, feedbackTimer);
 }
 
 function changeQuantity(name, amount) {
