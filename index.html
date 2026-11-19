@@ -175,6 +175,7 @@
       color: var(--verde);
       font-size: 43px;
     }
+    .product-visual img { width: 100%; height: 100%; padding: 14px; object-fit: contain; display: block; }
     .product-info { padding: 19px; }
     .product-category {
       font-size: 10px;
@@ -498,56 +499,56 @@
 
 <script>
 const products = [
-  ["Gps Garmin Etrex 22x","Forestal"],
-  ["Gps Garmin Etrex 10","Forestal"],
-  ["Pierneras Protector para Motosierrista","Forestal"],
-  ["Rastrillo Forestal Mcleod","Forestal"],
-  ["Canilleras de Proteccion Guadañador Motosierrista","Forestal"],
-  ["Canilleras Protector de Serpientes Polaina","Forestal"],
-  ["Hacha Pulasky","Forestal"],
-  ["Motosierra Stihl MS 250","Forestal"],
-  ["Bota Negra Swat Tipo Militar","Forestal"],
-  ["Combinacion Pico/Pala","Forestal"],
-  ["Monja Forestal","Forestal"],
-  ["Bomba Fumigadora Royal condor 10 litros","Forestal"],
-  ["Batefuego Forestal","Forestal"],
-  ["Trimmer Desjarretadora de 9M Modulos 1,5M y cabezal Truper","Forestal"],
-  ["Tijeron de poda marca Gavilan Colorao","Forestal"],
-  ["Tijeron de Poda Telescopico Marca Fiskars","Forestal"],
+  ["Gps Garmin Etrex 22x", "Forestal", "images/01-gps-garmin-etrex-22x.jpg"],
+  ["Gps Garmin Etrex 10", "Forestal", "images/02-gps-garmin-etrex-10.jpg"],
+  ["Pierneras Protector para Motosierrista", "Forestal", "images/03-pierneras-protector-motosierrista.jpg"],
+  ["Rastrillo Forestal Mcleod", "Forestal", "images/04-rastrillo-forestal-mcleod.jpg"],
+  ["Canilleras de Proteccion Guadañador Motosierrista", "Forestal", "images/05-canilleras-proteccion-guadanador.jpg"],
+  ["Canilleras Protector de Serpientes Polaina", "Forestal", "images/06-canilleras-protector-serpientes.jpg"],
+  ["Hacha Pulasky", "Forestal", "images/07-hacha-pulasky.jpg"],
+  ["Motosierra Stihl MS 250", "Forestal", "images/08-motosierra-stihl-ms-250.jpg"],
+  ["Bota Negra Swat Tipo Militar", "Forestal", "images/09-bota-negra-swat.jpg"],
+  ["Combinacion Pico/Pala", "Forestal", "images/10-combinacion-pico-pala.jpg"],
+  ["Monja Forestal", "Forestal", "images/11-monja-forestal.jpg"],
+  ["Bomba Fumigadora Royal condor 10 litros", "Forestal", "images/12-bomba-fumigadora-royal-condor.jpg"],
+  ["Batefuego Forestal", "Forestal", "images/13-batefuego-forestal.jpg"],
+  ["Trimmer Desjarretadora de 9M Modulos 1,5M y cabezal Truper", "Forestal", "images/14-trimmer-desjarretadora.jpg"],
+  ["Tijeron de poda marca Gavilan Colorao", "Forestal", "images/15-tijeron-gavilan-colorao.jpg"],
+  ["Tijeron de Poda Telescopico Marca Fiskars", "Forestal", "images/16-tijeron-telescopico-fiskars.jpg"],
 
-  ["Cámara Trampa Bushnell prime Trail 24 MP LowGlow 119932CB","Biología"],
-  ["Cámara Trampa De Rastreo A900i 30MP","Biología"],
-  ["Pinza Plegable Herpetologia Serpiente 130cm","Biología"],
-  ["Gancho Herpetológico Estándar 100cm","Biología"],
-  ["Binoculares Bushnell 8x25mm H20","Biología"],
-  ["Binocular Celestron 10x42","Biología"],
-  ["Prensa Botánica Profesional con Remaches de Latón","Biología"],
-  ["Lupa doble 30x22mm 60x12mm","Biología"],
-  ["Kit de disección Botánica","Biología"],
+  ["Cámara Trampa Bushnell prime Trail 24 MP LowGlow 119932CB", "Biología", "images/17-camara-trampa-bushnell.jpg"],
+  ["Cámara Trampa De Rastreo A900i 30MP", "Biología", "images/18-camara-trampa-a900i.jpg"],
+  ["Pinza Plegable Herpetologia Serpiente 130cm", "Biología", "images/19-pinza-herpetologia-130cm.jpg"],
+  ["Gancho Herpetológico Estándar 100cm", "Biología", "images/20-gancho-herpetologico-100cm.jpg"],
+  ["Binoculares Bushnell 8x25mm H20", "Biología", "images/21-binoculares-bushnell-h20.jpg"],
+  ["Binocular Celestron 10x42", "Biología", "images/22-binocular-celestron-10x42.jpg"],
+  ["Prensa Botánica Profesional con Remaches de Latón", "Biología", "images/23-prensa-botanica.jpg"],
+  ["Lupa doble 30x22mm 60x12mm", "Biología", "images/24-lupa-doble.jpg"],
+  ["Kit de disección Botánica", "Biología", "images/25-kit-diseccion-botanica.jpg"],
 
-  ["Marcador de Objeto","Civil"],
-  ["Guante de mecánica marca Dewalt Dpg780","Civil"],
-  ["Lampara Led para obra marca Dewalt Dwht70440","Civil"],
-  ["Luces Solares 28 Led Inalámbricas","Civil"],
-  ["Destornillador de Bateria Ixo Profesional","Civil"],
-  ["Hipsómetro Nikon Forestry Pro ll","Civil"],
-  ["Hipsómetro Haglöf Vertex IV 60º","Civil"],
+  ["Marcador de Objeto", "Civil", "images/26-marcador-objeto.jpg"],
+  ["Guante de mecánica marca Dewalt Dpg780", "Civil", "images/27-guante-mecanica-dewalt.jpg"],
+  ["Lampara Led para obra marca Dewalt Dwht70440", "Civil", "images/28-lampara-led-dewalt.jpg"],
+  ["Luces Solares 28 Led Inalámbricas", "Civil", "images/29-luces-solares-28-led.jpg"],
+  ["Destornillador de Bateria Ixo Profesional", "Civil", "images/30-destornillador-bateria-ixo.jpg"],
+  ["Hipsómetro Nikon Forestry Pro ll", "Civil", "images/31-hipsometro-nikon-forestry-pro-ii.jpg"],
+  ["Hipsómetro Haglöf Vertex IV 60º", "Civil", "images/32-hipsometro-haglof-vertex-iv.jpg"],
 
-  ["Termohigrómetro Máxima y Mínima TA218A","Ambiental"],
-  ["Medidor Ambiental 5 en 1 Extech EN300","Ambiental"],
-  ["Medidor de Monóxido de Carbono As8700a","Ambiental"],
-  ["Anemometro Digital Proster TL017","Ambiental"],
-  ["Estación Meteorológica Weather WS-2902","Ambiental"],
-  ["Refractometro De salinidad Extech","Ambiental"],
-  ["Medidor de Humedad de madera 2 en 1Dr. Meter","Ambiental"],
-  ["Medidor Multiparamétrico HI 98194","Ambiental"],
-  ["Medidor de Ph y temperatura Digitalr","Ambiental"],
-  ["Kit medidor Portátil de 9 parámetros Extech DO700","Ambiental"],
-  ["Medidor de conductividad Extech EC 150","Ambiental"],
-  ["Caudalímetro Oceanics Modelo 2030R","Ambiental"],
-  ["Kit de Fotómetro YSI modelo 9500","Ambiental"],
-  ["Kit de Monitoreo de Drenaje Lamotte","Ambiental"],
-  ["Kit de prueba de Agua con Fosfato Chemets","Ambiental"]
+  ["Termohigrómetro Máxima y Mínima TA218A", "Ambiental", "images/33-termohigrometro-ta218a.jpg"],
+  ["Medidor Ambiental 5 en 1 Extech EN300", "Ambiental", "images/34-medidor-ambiental-extech-en300.jpg"],
+  ["Medidor de Monóxido de Carbono As8700a", "Ambiental", "images/35-medidor-monoxido-as8700a.jpg"],
+  ["Anemometro Digital Proster TL017", "Ambiental", "images/36-anemometro-proster-tl017.jpg"],
+  ["Estación Meteorológica Weather WS-2902", "Ambiental", "images/37-estacion-meteorologica-ws2902.jpg"],
+  ["Refractometro De salinidad Extech", "Ambiental", "images/38-refractometro-salinidad-extech.jpg"],
+  ["Medidor de Humedad de madera 2 en 1Dr. Meter", "Ambiental", "images/39-medidor-humedad-madera-dr-meter.jpg"],
+  ["Medidor Multiparamétrico HI 98194", "Ambiental", "images/40-medidor-multiparametrico-hi98194.jpg"],
+  ["Medidor de Ph y temperatura Digitalr", "Ambiental", "images/41-medidor-ph-temperatura.jpg"],
+  ["Kit medidor Portátil de 9 parámetros Extech DO700", "Ambiental", "images/42-kit-extech-do700.jpg"],
+  ["Medidor de conductividad Extech EC 150", "Ambiental", "images/43-medidor-conductividad-extech-ec150.jpg"],
+  ["Caudalímetro Oceanics Modelo 2030R", "Ambiental", "images/44-caudalimetro-oceanics-2030r.jpg"],
+  ["Kit de Fotómetro YSI modelo 9500", "Ambiental", "images/45-kit-fotometro-ysi-9500.jpg"],
+  ["Kit de Monitoreo de Drenaje Lamotte", "Ambiental", "images/46-kit-monitoreo-drenaje-lamotte.jpg"],
+  ["Kit de prueba de Agua con Fosfato Chemets", "Ambiental", "images/47-kit-fosfato-chemets.jpg"]
 ];
 
 const icons = {
@@ -577,14 +578,19 @@ function renderProducts() {
     return;
   }
 
-  filtered.forEach(([name, category]) => {
+  filtered.forEach(([name, category, imagePath]) => {
     const inCart = cart.some(item => item.name === name);
     const card = document.createElement("article");
     card.className = "product";
 
     const visual = document.createElement("div");
     visual.className = "product-visual";
-    visual.textContent = icons[category];
+    const productImage = document.createElement("img");
+    productImage.src = imagePath;
+    productImage.alt = name;
+    productImage.loading = "lazy";
+    productImage.onerror = () => { visual.textContent = icons[category]; };
+    visual.append(productImage);
 
     const info = document.createElement("div");
     info.className = "product-info";
