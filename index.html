@@ -219,6 +219,14 @@
     }
     .product:hover { transform: translateY(-4px); box-shadow: 0 12px 30px #103d2510; }
     .product { scroll-margin-top: 100px; }
+    @keyframes productCardReveal {
+      from { opacity: 0; transform: translateY(18px) scale(.985); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .product.reveal-on-scroll {
+      animation: productCardReveal .58s cubic-bezier(.2,.7,.25,1) both;
+      animation-delay: var(--reveal-delay, 0ms);
+    }
     .product.cart-target { outline: 3px solid #49A923; outline-offset: 4px; }
     .product-visual {
       height: 175px;
@@ -262,6 +270,7 @@
     }
     @media (prefers-reduced-motion: reduce) {
       .product-visual img, .image-viewer, .image-viewer img { transition: none !important; }
+      .product.reveal-on-scroll { animation: none !important; }
     }
     .product-info {
       display: flex;
@@ -1142,6 +1151,21 @@ function saveCart() {
 
 const grid = document.getElementById("product-grid");
 const searchInput = document.getElementById("search");
+const reduceProductMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const productRevealObserver = !reduceProductMotion && "IntersectionObserver" in window
+  ? new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const card = entry.target;
+        card.classList.add("reveal-on-scroll");
+        card.addEventListener("animationend", () => {
+          card.classList.remove("reveal-on-scroll");
+          card.style.removeProperty("--reveal-delay");
+        }, { once: true });
+        productRevealObserver.unobserve(card);
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -35px 0px" })
+  : null;
 
 function openImageViewer(src, name, category, description) {
   const viewer = document.getElementById("image-viewer");
@@ -1285,6 +1309,10 @@ function renderProducts() {
     info.append(label, title, preview, moreButton, button);
     card.append(visual, info);
     grid.append(card);
+    if (productRevealObserver) {
+      card.style.setProperty("--reveal-delay", (productIndex % 6) * 65 + "ms");
+      productRevealObserver.observe(card);
+    }
   });
 }
 
